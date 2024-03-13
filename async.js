@@ -17,23 +17,42 @@ const getNews = async () => {
     /*  console.log(data.articles);  */ //! haberlere ulaşacağım kısmı clg ye yazdırdım bundan sonra try catch yapısı kurarak hata yakalamam gerekiyor.
     displayNews(data.articles); //? veriyi basmak için bu fonsiyonu kullanıyorum. aşağıda da bu fonksiyonu yazacağım.
   } catch (error) {
-    console.log(error); //& try catch hataları yakalmada yetersiz kalıyor çünkü fetch in optimislik yapısından dolayı base_url de delki adres hatasını yakalıyor ama apikey deki hatayı yakalamıyor undefined dönüyor.
+    console.log(error); 
+    const newsArticle = document.getElementById("news");
+    newsArticle.innerHTML += ``
+    //& try catch hataları yakalmada yetersiz kalıyor çünkü fetch in optimislik yapısından dolayı base_url de delki adres hatasını yakalıyor ama apikey deki hatayı yakalamıyor undefined dönüyor.
   }
 };
 
 const displayNews = (news) => {
   const newsArticle = document.getElementById("news");
-  news.forEach((item) => {
+ /*  news.forEach((item) => {
     console.log(item);
 
     newsArticle.innerHTML += `<div class="card" style="width: 18rem;">
     <img src="${item.urlToImage}" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">${item.title}</h5>
+      <p class="card-text">${item.content}</p>
+      <a href="${item.url}" target="blank" class="btn btn-primary">Go somewhere</a>
     </div>
   </div>`
+  }); */
+  news.forEach(item => {
+    const {urlToImage, url, title, content} = item //! yukarıda yaptığım aynı işlemi destraction yöntemi ile açtım ve her seferinde item yazmaktan kurtuldum ve havada destraction yapada bilir dim => news.forEach({urlToImage, url, title, content})=> {
+
+    newsArticle.innerHTML += `
+    <div class="col-sm-6 col-md-4 col-lg-3" >
+      <div class="card" >
+        <img src="${urlToImage}" class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text">${content}</p>
+        <a href="${url}" target="blank" class="btn btn-primary">Go somewhere</a>
+       </div>
+      </div>
+    </div> ` 
+
   });
 };
 
